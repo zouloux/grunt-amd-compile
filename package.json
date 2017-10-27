@@ -1,0 +1,35 @@
+{
+  "name": "grunt-amd-compile",
+  "version": "1.0.0",
+  "description": "Compile and optimize AMD modules from a files tree to a bundle.",
+  "main": "grunt-amd-compile.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zouloux/grunt-amd-compile.git"
+  },
+  "keywords": [
+    "AMD",
+    "compile",
+    "optimize",
+    "requireJS",
+    "require",
+    "define",
+    "grunt",
+    "plugin",
+    "solid",
+    "solidjs",
+    "solid-js",
+    "solidify",
+    "typescript",
+    "module"
+  ],
+  "author": "Alexis Bouhet",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/zouloux/grunt-amd-compile/issues"
+  },
+  "homepage": "https://github.com/zouloux/grunt-amd-compile#readme"
+}
