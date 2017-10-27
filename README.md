@@ -18,7 +18,7 @@ define(['require', 'exports'], function (require, exports)
 });
 ```
 
-And this is the same but optimized :
+The same module but optimized :
 ```javascript
 define('my/module/path/is/here/OptimizedModule', ['require', 'exports'], function (require, exports)
 {
@@ -26,14 +26,14 @@ define('my/module/path/is/here/OptimizedModule', ['require', 'exports'], functio
 });
 ```
 
-See ? An optimized module have its path as a first argument of its define statement.
+An optimized module have its path as a first argument of its define statement.
 Without this path, RequireJS can't know what is the virtual path of this module.
 Others modules can require this one from its path, like so :
 
 ```javascript
 define('my/module/path/is/here/OtherOne', ['require', 'exports', './OptimizedModule'], function (require, exports, OptimizedModule)
 {
-    // Here we can use OptimizedModule
+    // Here we can use OptimizedModule which is in the same folder 
 });
 ```
 
@@ -42,7 +42,7 @@ Dependency paths are relative to each others, but RequireJS implementation takes
 
 # Optimizing, bundling and code-splitting
 
-First, this AMD files tree as example :
+First, take a look at this AMD files tree as example :
 
 - amd/
   - **common/**
@@ -86,16 +86,16 @@ First, this AMD files tree as example :
         });
       ```
 
-> Note : This kind of file tree is easily generated with [Typescript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html) and is used in [solid-js framework](https://github.com/solid-js/web-base).
+> Note : This kind of file tree is easily generated with [Typescript](https://www.typescriptlang.org/docs/handbook/typescript-in-5-minutes.html) and is used seamlessly in [solid-js framework](https://github.com/solid-js/web-base).
 
-#### Quickly we see 2 things :
+### We can see 2 things from this tree :
 - Modules are not optimized.
-- Modules files are in a file tree representing the module paths.
+- Modules files paths are representing the module paths.
 
 We can optimize every modules easily and concat them into a big bundle with this grunt task...
 But that's not all !
 
-#### Apps :
+### Apps :
 Some modules are using other modules but in other "apps".
 Apps here are these folder :
 - `common/`
@@ -112,23 +112,24 @@ App to bundle is important to get because this is an powerful feature : Code-Spl
 Each app have resources and dependencies.
 **One app = one js file** This is handy to optimize our application by loading bundled files for only the code we need.
 
+Example :
 - Page `a.html` can load `common.js` and `first-app.js` because it does not use `secondApp` modules.
 - Page `b.html` can load `common.js` and `second-app.js` because it does not use `firstApp` modules.
 
 
-#### Static libs
+### Static libs
 
 **grunt-amd-compile** can also concat static libraries.
 This is useful to bundle huge JS files, like react or jquery together, but without the AMD optimization.
 Concatenation is faster and libraries like react / jquery / gsap / pixi, etc, works well as global module.
 [amdLite](https://github.com/zouloux/amd-lite) has an option to map global modules to dependencies.
-So when a module requires ['react', 'react-dom', 'gsap'], it will in fact returns `React`, `ReactDOM` and `GreenSockGlobals`
+So when a module requires ['react', 'react-dom', 'gsap'], it will in fact returns `window.React`, `window.ReactDOM` and `window.GreenSockGlobals`
 See [amdLite config file](https://github.com/zouloux/amd-lite/blob/master/amdLite.config.js) to see how it works.
 
 
-#### Uglify
+### Uglify
 
-The option `addUglifyTargets: true` adds every amdCompile target to the uglify config node.
+The option `addUglifyTargets: true` adds every `amdCompile` target to the uglify config node.
 
 
 # Usage
@@ -138,13 +139,15 @@ See this [configuration file](Gruntfile.js) example.
 
 # In the browser
 
-Know you have clean optimized bundle containing your AMD modules, you need a library to define and require these virtual path.
+Now you have clean and optimized bundles containing your AMD modules, you need a library to define and require these modules from their virtual path.
+
 The original RequireJS script is pretty big, can do a lot of stuff, and is complex to configure.
 
 So I made a little RequireJS implementation for the browser, named [amdLite](https://github.com/zouloux/amd-lite).
-The configuration is easy, take a look !
+The configuration is easy, [take a look](https://github.com/zouloux/amd-lite/blob/master/amdLite.config.js) !
 
 Also, all of this is used transparently with [solid-js framework](https://github.com/solid-js/web-base).
+If you want something ready to use, give it a try :)
 
 
 # Links
